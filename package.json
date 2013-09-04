@@ -1,0 +1,14 @@
+{
+  "name": "overture"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+    "request": "*",
+		"jasmine-node":"1.4.0"
+  }
+  ,"engines": {
+    "node": "0.8.4",
+    "npm": "1.1.41"
+  }
+
+}
