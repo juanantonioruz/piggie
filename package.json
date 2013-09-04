@@ -4,6 +4,7 @@
   , "private": true
   , "dependencies": {
     "request": "*",
+
 		"jasmine-node":"1.4.0"
   }
   ,"engines": {

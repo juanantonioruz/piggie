@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [com.cemerick/piggieback "0.1.0"]
-
+                 [com.cemerick/clojurescript.test "0.0.4"]
                  [org.clojure/clojurescript "0.0-1859"]
                  [org.bodil/cljs-noderepl "0.1.10"]]
       :hooks [leiningen.cljsbuild]
