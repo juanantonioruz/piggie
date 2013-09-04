@@ -4,6 +4,7 @@
 /classes
 /checkouts
 pom.xml
+.repl/
 *.jar
 *.class
 .lein-deps-sum
