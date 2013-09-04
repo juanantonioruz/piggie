@@ -34,15 +34,15 @@ M-x nrepl-jack-in
 (require '[cljs.repl.node :as node])   
 (node/run-node-nrepl)   
 
-... on node-cljs-nrepl ...
+... on node-cljs-nrepl ...   
 (js/require "./my_api")   
 (def http (js/require "http"))   
 
 
-FIXME
+
 
 ## License
 
-Copyright © 2013 FIXME
+Copyright © 2013 [@tangrammer](https://twitter.com/tangrammer)
 
 Distributed under the Eclipse Public License, the same as Clojure.

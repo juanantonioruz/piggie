@@ -4,6 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.0"]
+                 [org.clojure/core.async "0.1.0-SNAPSHOT"]
                  [com.cemerick/piggieback "0.1.0"]
                  [com.cemerick/clojurescript.test "0.0.4"]
                  [org.clojure/clojurescript "0.0-1859"]
@@ -20,10 +21,13 @@
                 :compiler {;; the name of emitted JS script file
 ;                           :output-to "piggieback_browser.js"
                            :output-to "node.js"
+                           :externs ["node_modules/jasmine-node/lib/jasmine-node/jasmine-1.3.1.js"]
                            :target :nodejs
                            ;; minimum optimization
                            :optimizations :advanced
                            ;; prettyfying emitted JS
                            :pretty-print true}}]}
-:repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+     :repositories {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
+
             )
