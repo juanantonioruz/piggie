@@ -14,14 +14,15 @@
       
   :cljsbuild {:builds
               [{;; clojurescript source code path
-                :source-paths ["src/cljs"]
+                :source-paths ["src/cljs-demo"]
 
                 ;; Google Closure Compiler options
                 :compiler {;; the name of emitted JS script file
-                           :output-to "piggieback_browser.js"
-;                           :target :nodejs
+;                           :output-to "piggieback_browser.js"
+                           :output-to "node.js"
+                           :target :nodejs
                            ;; minimum optimization
-;                           :optimizations :simple
+                           :optimizations :advanced
                            ;; prettyfying emitted JS
                            :pretty-print true}}]}
 :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
