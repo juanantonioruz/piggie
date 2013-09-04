@@ -8,7 +8,7 @@
  )
   (println "Hello World!")
   ( let [http (js/require "http")
-      handler (fn [req res] (.end res "Hello sailor!"))
+      handler (fn [req res] (.end res "Hello Juan!"))
       server (.createServer http handler)]
     (.listen server 1337)
     (reset! my-server server)

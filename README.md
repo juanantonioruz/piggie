@@ -1,7 +1,7 @@
 # piggie
 
 A cljs-node app.
-
+Working with node-repl  https://github.com/bodil/cljs-noderepl  and piggieback https://github.com/cemerick/piggieback
 
 
 On osX
