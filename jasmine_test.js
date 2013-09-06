@@ -8,5 +8,6 @@ my_cljs_lib.cljs_demo.hello.examplecallback();
 // this way don't work!
 //var other=require("./node2");
 //console.log(other);
+
 //other.example.hello("asda");
 

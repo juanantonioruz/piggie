@@ -1,4 +1,16 @@
-(ns cljs-demo.hello)
+(ns cljs-demo.hello
+
+; this macro not work with nsclj build  (:require-macros [cemerick.cljs.test :as uu])
+;  (:require [cemerick.cljs.test :as t])
+  )
+
+
+(comment deftest somewhat-less-wat
+  (is (= "{}[]" (+ {} []))))
+
+(comment deftest javascript-allows-div0
+  (is (= js/Infinity (/ 1 0) (/ (int 1) (int 0)))))
+
 (def my-server (atom {}))
 
 (defn start [& _]
@@ -51,10 +63,23 @@
 (ns example)
 (defn ^:export hello [name]
   
-  (println "do dooo it!"))
+  (comment "thats work but idont know how run jasminenode then" let [j (js/require "jasmine-node")]
+    (println js/expect)
+
+    ( js/describe "my description" (fn []
+                                     (.toBe (js/expect true) false)
+                                     (js/it "it description" (fn []
+                                                               (println "inside it")
+                                                               )))
+                  (println "inside jasmine"))
+    ) 
+
+  (println "do dooo ityyyyyeeey!" ))
 
 
-;(set! *main-cli-fn*  examplecallback)
+;(set! *main-cli-fn*  hello)
+
+
 
 
 
