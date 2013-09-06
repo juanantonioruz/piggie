@@ -20,11 +20,11 @@
                 ;; Google Closure Compiler options
                 :compiler {;; the name of emitted JS script file
 ;                           :output-to "piggieback_browser.js"
-                           :output-to "node.js"
-                           :externs ["node_modules/jasmine-node/lib/jasmine-node/jasmine-1.3.1.js"]
-                           :target :nodejs
+                          :output-to "node2.js"
+;                           :externs ["node_modules/jasmine-node/lib/jasmine-node/jasmine-1.3.1.js"]
+ ;                          :target :nodejs
                            ;; minimum optimization
-                           :optimizations :advanced
+;                           :optimizations :advanced
                            ;; prettyfying emitted JS
                            :pretty-print true}}]}
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}

@@ -5,11 +5,13 @@
   (let [fs (js/require "fs")
         ]
     (.readdir fs "." (fn [err files] (println files)))
- )
+    )
+
+
   (println "Hello World!")
   ( let [http (js/require "http")
-      handler (fn [req res] (.end res "Hello Juan!"))
-      server (.createServer http handler)]
+         handler (fn [req res] (.end res "Hello Juan!"))
+         server (.createServer http handler)]
     (.listen server 1337)
     (reset! my-server server)
     )
@@ -17,18 +19,48 @@
 
 (defn stop []
   ( let [http (js/require "http")
-     ]
+         ]
     (.stop @my-server (fn [] (println "stopping the node server")))
 
     )
   )
-
 (defn echo_prop []
   (let [my-api (js/require "./my_api")]
-    (println (aget my-api "hello"))
+    (println (aget my-api "db"))
     )
   )
 
-(set! *main-cli-fn* echo_prop)
+
+
+(defn ^:export  examplecallback []
+  (let [my-api (js/require "./my_api") ; the api.js lib used for this example
+        db (aget my-api "db") ; this is your db object
+        my_fn (fn [_item] ;this is your callback function
+                (println "printing from clojurescript"  _item)
+                )
+        ]
+    (do
+      (-> db (.values "inventory") (.done my_fn)) ;; calling your js in a similar way you want in js
+      ;; or 
+      (.done (.values db "inventory_bis") my_fn) ;; calling nested form in the standar lisp manner
+      )
+    ) 
+  )
+
+
+(ns example)
+(defn ^:export hello [name]
+  
+  (println "do dooo it!"))
+
+
+;(set! *main-cli-fn*  examplecallback)
+
+
+
+
+
+
+
 
 
