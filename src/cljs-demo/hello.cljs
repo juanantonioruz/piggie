@@ -20,7 +20,7 @@
     )
 
 
-  (println "Hello World!")
+  (println "Hello World BIS!")
   ( let [http (js/require "http")
          handler (fn [req res] (.end res "Hello Juan!"))
          server (.createServer http handler)]

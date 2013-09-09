@@ -4,6 +4,22 @@ A cljs-node app.
 Working with node-repl  https://github.com/bodil/cljs-noderepl  and piggieback https://github.com/cemerick/piggieback
 
 
+Working cljscript environment to develop nodejs libs
+
+###Required:   
+$ npm install -g clojure-script   
+$ npm install -g supervisor   
+$ npm install -g nodemon   
+
+
+$ ncljsc --server 4242   
+$ git clone git@github.com:juanantonioruz/piggie.git   
+$ cd ../piggie  
+$ supervisor -w src/cljs-demo/hello.cljs -n exit -x nclj -- --client 4242 --compile  src/cljs-demo/hello.cljs   
+$ nodemon jasmine-test.js   
+
+
+
 
 
 
