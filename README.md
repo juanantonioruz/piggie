@@ -11,7 +11,7 @@ $ npm install -g clojure-script
 $ npm install -g supervisor   
 $ npm install -g nodemon   
 
-
+#FIRST start nrepl from emacs, otherwise the nrepl cljs open in read mode and it doesnt let C-C C-K and others   
 + open emacs, cd into project and nrepl-jack-in
 + insert into nrepl (require '[cljs.repl.node :as node])(node/run-node-nrepl) 
 + now we can evaluate cljs files with C-C+C-K keys and the rest of nrepl keys 
@@ -19,10 +19,14 @@ $ npm install -g nodemon
 $ ncljsc --server 4242   
 $ git clone git@github.com:juanantonioruz/piggie.git   
 $ cd ../piggie  
-$ supervisor -w src/cljs-demo/hello.cljs -n exit -x nclj -- --client 4242 --compile  src/cljs-demo/hello.cljs   
-$ nodemon jasmine-test.js   
+$ supervisor -w src/cljs-demo/hello.cljs -n exit -x nclj -- --client 4242 --compile  src/cljs-demo/hello.cljs  
+SWITCH  
+$ nodemon jasmine-test.js  
+OR
+$ supervisor -w src/cljs-demo/hello.js,jasmine_node_tests -n exit -x jasmine-node jasmine_node_tests/
 
-
+My dev environment    
+https://dl.dropboxusercontent.com/u/8688858/node_cljs_integration.mov
 
 
 

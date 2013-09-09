@@ -1,10 +1,23 @@
 (ns cljs-demo.hello
-
+; this is the package! cljs-demo.hello in js cljs_demo.hello
 ; this macro not work with nsclj build  (:require-macros [cemerick.cljs.test :as uu])
 ;  (:require [cemerick.cljs.test :as t])
   )
 
-()
+
+                                        ; we are going to define a
+                                ; function
+
+; WHEN WE SAVE THE CLJS FILE, IT'S SAVED AUTOMATICALLY AND IT'S READY
+                                        ; TO USE FROM NODE
+                                        ; the ^:export is necesary to publich this method in node
+
+; lets open the node file
+
+(defn ^:export my_function [name]
+  (str "hello your name was: " name)
+  )
+
 
 (comment deftest somewhat-less-wat
   (is (= "{}[]" (+ {} []))))
@@ -66,6 +79,7 @@
   (str "welcome " name)
   
   )
+
 
 (ns example)
 (defn ^:export hello [name]
