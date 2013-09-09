@@ -21251,20 +21251,20 @@ goog.require("cljs.core");
 cljs_demo.hello.my_server = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY);
 cljs_demo.hello.start = function() {
   var start__delegate = function(_) {
-    var fs_4255 = require("fs");
-    fs_4255.readdir(".", function(err, files) {
+    var fs_2858 = require("fs");
+    fs_2858.readdir(".", function(err, files) {
       return cljs.core.println.call(null, files)
     });
-    cljs.core.println.call(null, "Hello World!");
-    var http_4256 = require("http");
-    var handler_4257 = function(http_4256) {
+    cljs.core.println.call(null, "Hello World BIS!");
+    var http_2859 = require("http");
+    var handler_2860 = function(http_2859) {
       return function(req, res) {
         return res.end("Hello Juan!")
       }
-    }(http_4256);
-    var server_4258 = http_4256.createServer(handler_4257);
-    server_4258.listen(1337);
-    cljs.core.reset_BANG_.call(null, cljs_demo.hello.my_server, server_4258);
+    }(http_2859);
+    var server_2861 = http_2859.createServer(handler_2860);
+    server_2861.listen(1337);
+    cljs.core.reset_BANG_.call(null, cljs_demo.hello.my_server, server_2861);
     return cljs.core.println.call(null, "Hello World!")
   };
   var start = function(var_args) {
@@ -21275,8 +21275,8 @@ cljs_demo.hello.start = function() {
     return start__delegate.call(this, _)
   };
   start.cljs$lang$maxFixedArity = 0;
-  start.cljs$lang$applyTo = function(arglist__4259) {
-    var _ = cljs.core.seq(arglist__4259);
+  start.cljs$lang$applyTo = function(arglist__2862) {
+    var _ = cljs.core.seq(arglist__2862);
     return start__delegate(_)
   };
   start.cljs$lang$arity$variadic = start__delegate;

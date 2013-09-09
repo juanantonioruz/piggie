@@ -12,6 +12,10 @@ $ npm install -g supervisor
 $ npm install -g nodemon   
 
 
++ open emacs, cd into project and nrepl-jack-in
++ insert into nrepl (require '[cljs.repl.node :as node])(node/run-node-nrepl) 
++ now we can evaluate cljs files with C-C+C-K keys and the rest of nrepl keys 
+
 $ ncljsc --server 4242   
 $ git clone git@github.com:juanantonioruz/piggie.git   
 $ cd ../piggie  

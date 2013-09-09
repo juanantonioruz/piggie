@@ -4,6 +4,7 @@
 ;  (:require [cemerick.cljs.test :as t])
   )
 
+()
 
 (comment deftest somewhat-less-wat
   (is (= "{}[]" (+ {} []))))
@@ -59,6 +60,12 @@
     ) 
   )
 
+
+(ns juan)
+(defn ^:export greeting [name]
+  (str "welcome " name)
+  
+  )
 
 (ns example)
 (defn ^:export hello [name]
