@@ -21890,35 +21890,6 @@ cljs_demo.test.somewhat_less_wat = cljs.core.vary_meta.call(null, cljs_demo.test
   }
 });
 cemerick.cljs.test.register_test_BANG_.call(null, "\ufdd1'cljs-demo.test", cljs_demo.test.somewhat_less_wat);
-cljs_demo.test.reading_dirs = function reading_dirs() {
-  return cemerick.cljs.test.test_var.call(null, cljs_demo.test.reading_dirs)
-};
-cljs_demo.test.reading_dirs = cljs.core.vary_meta.call(null, cljs_demo.test.reading_dirs, cljs.core.assoc, "\ufdd0:name", "\ufdd1'reading-dirs", "\ufdd0:test", function reading_dirs_test() {
-  try {
-    var value__2878__auto__ = cljs.core.count.call(null, ideate.ideate.list_dir.call(null, "./")) > 0;
-    if(value__2878__auto__) {
-      cemerick.cljs.test.do_report.call(null, cljs.core.ObjMap.fromObject(["\ufdd0:actual", "\ufdd0:type", "\ufdd0:message", "\ufdd0:expected"], {"\ufdd0:actual":value__2878__auto__, "\ufdd0:type":"\ufdd0:pass", "\ufdd0:message":null, "\ufdd0:expected":cljs.core.with_meta(cljs.core.list("\ufdd1'>", cljs.core.with_meta(cljs.core.list("\ufdd1'count", cljs.core.with_meta(cljs.core.list("\ufdd1'-ideate/list_dir", "./"), cljs.core.hash_map("\ufdd0:line", 9))), cljs.core.hash_map("\ufdd0:line", 9)), 0), 
-      cljs.core.hash_map("\ufdd0:line", 9))}))
-    }else {
-      cemerick.cljs.test.do_report.call(null, cljs.core.ObjMap.fromObject(["\ufdd0:actual", "\ufdd0:type", "\ufdd0:message", "\ufdd0:expected"], {"\ufdd0:actual":value__2878__auto__, "\ufdd0:type":"\ufdd0:fail", "\ufdd0:message":null, "\ufdd0:expected":cljs.core.with_meta(cljs.core.list("\ufdd1'>", cljs.core.with_meta(cljs.core.list("\ufdd1'count", cljs.core.with_meta(cljs.core.list("\ufdd1'-ideate/list_dir", "./"), cljs.core.hash_map("\ufdd0:line", 9))), cljs.core.hash_map("\ufdd0:line", 9)), 0), 
-      cljs.core.hash_map("\ufdd0:line", 9))}))
-    }
-    return value__2878__auto__
-  }catch(e3007) {
-    if(cljs.core.instance_QMARK_.call(null, Error, e3007)) {
-      var t__2912__auto__ = e3007;
-      return cemerick.cljs.test.do_report.call(null, cljs.core.ObjMap.fromObject(["\ufdd0:actual", "\ufdd0:type", "\ufdd0:message", "\ufdd0:expected"], {"\ufdd0:actual":t__2912__auto__, "\ufdd0:type":"\ufdd0:error", "\ufdd0:message":null, "\ufdd0:expected":cljs.core.with_meta(cljs.core.list("\ufdd1'>", cljs.core.with_meta(cljs.core.list("\ufdd1'count", cljs.core.with_meta(cljs.core.list("\ufdd1'-ideate/list_dir", "./"), cljs.core.hash_map("\ufdd0:line", 9))), cljs.core.hash_map("\ufdd0:line", 9)), 
-      0), cljs.core.hash_map("\ufdd0:line", 9))}))
-    }else {
-      if("\ufdd0:else") {
-        throw e3007;
-      }else {
-        return null
-      }
-    }
-  }
-});
-cemerick.cljs.test.register_test_BANG_.call(null, "\ufdd1'cljs-demo.test", cljs_demo.test.reading_dirs);
 goog.provide("cljs_demo.hello");
 goog.require("cljs.core");
 cljs_demo.hello.my_function = function my_function(name) {

@@ -5,11 +5,14 @@
 (deftest somewhat-less-wat
   (is (= 1 1)))
 
-(deftest reading-dirs
-  (is (> (count (-ideate/list_dir "./")) 0)))
+( deftest reading-dirs
+  
+  (let [the-files (-ideate/list_dir "./")]
+    (print (count the-files))
+    (is (= (count the-files) 17))))
 
 
-
+(defn retest []  (t/test-ns 'cljs-demo.test))
 
 
 
