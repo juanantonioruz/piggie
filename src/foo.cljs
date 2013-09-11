@@ -26,3 +26,6 @@
   (clj->js (ideate/list_dir "./"))
   )
 
+(defn ^:export clj_to_js [the_clj]
+  (clj->js the_clj)
+  )

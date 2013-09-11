@@ -1,15 +1,17 @@
-var ideate=require("./../compiled.js");
+var compiled=require("./../compiled.js");
+console.log("Exploring the cljs map file ...");
+console.log(compiled);
+var ideate =compiled.ideate.ideate;
+describe("A suite", function() {
+    it("description", function() {
+        var r=compiled.foo.clj_to_js(ideate.list_dir("./"));
 
-console.log(ideate);
+        expect(r).toContain("index.html");
 
-// describe("A suite", function() {
-//   it("description", function() {
-//     expect(my_cljs_lib.juan.greeting("juan")).toEqual("welcome juan");
-//     expect(my_cljs_lib.cljs_demo.hello.my_function("Bill")).toEqual("hello your name is: Bill");
-//     expect(true).toBe(true);
+        expect(true).toBe(true);
 
-//   });
-// });
+    });
+});
 
 
 

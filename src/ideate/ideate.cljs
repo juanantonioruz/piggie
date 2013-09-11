@@ -16,8 +16,6 @@
 (defn filter-condition-collection-into-collection [string-files fn_filters]
 
   (loop [the-first (first fn_filters) the-next (next fn_filters) the-files string-files ]
-    ;(println the-files)
-    ;(println (filter the-first the-files))
     (if (nil? the-next)
         (filter the-first the-files)
         (recur (first the-next) (next the-next) (filter the-first the-files))))
