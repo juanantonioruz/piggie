@@ -4,7 +4,7 @@ A cljs-node app.
 Working with node-repl  https://github.com/bodil/cljs-noderepl  and piggieback https://github.com/cemerick/piggieback
 
 
-! new command line to compile to a specific file   
+# new command line to compile to a specific file   
 It must be running the ncljsc server on port 4242   
 '''supervisor -w src/foo.cljs -n exit -x ncljsc -- --client 4242 -c -p src/foo.cljs > compiled.js'''
 
