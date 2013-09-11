@@ -10,8 +10,8 @@
       (.isDirectory stat)
       false)
     (catch  e 
-        (println "catching all exceptions, include js/exeptions")
-      (print e)
+      ;  (println "catching all exceptions, include js/exeptions")
+      ;(print e)
       false
       )
     )

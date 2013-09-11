@@ -22,12 +22,13 @@
 
 
 
-(defn apply-filter-conditions-to-collection [ fn_filters string-files]
+(defn apply-filters-to-collection [ fn_filters string-files]
   (loop [the-first (first fn_filters) the-next (next fn_filters) the-files string-files ]
     (if (nil? the-next)
       (filter the-first the-files)
       (recur (first the-next) (next the-next) (filter the-first the-files))))
   )
+
 
 (contains? ".ey" ".")
 
