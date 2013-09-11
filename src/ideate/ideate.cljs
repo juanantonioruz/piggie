@@ -3,15 +3,20 @@
             [ideate.util :as util])
   )
 
-(comment "trying to understand require and use... so these are a few exaples"  example-of-use
-         (ns prueba 
-           (:use [clojure.string :only[capitalize
-                                       ]])))
-(comment example-of-require
-         (ns juan 
-           (:require [clojure.string :as stt
-                      ])))
-(def hola "hola")
+(def fs (js/require "fs"))
+
+(defn is-dir? [the_dir]
+  (try*
+    (if-let [stat (.statSync fs the_dir )]
+      (.isDirectory stat)
+      false)
+    (catch  e 
+        (println "catching all exceptions, include js/exeptions")
+      (print e)
+      false
+      )
+    )
+  )
 
 (defn filter-condition-collection-into-collection [string-files fn_filters]
 
@@ -19,31 +24,39 @@
     (if (nil? the-next)
         (filter the-first the-files)
         (recur (first the-next) (next the-next) (filter the-first the-files))))
-  
+  )
+
+(defn add-folder-char
+  "this fn add a hash to the name of the file in case of this is a directory"
+  [current_dir, files-collection]
+  (map (fn[it] 
+                      (if (is-dir? (str current_dir it))
+                          (str it "/")
+                        it
+                          )
+                      ) files-collection)
   )
 
 
 (defn ^:export list_dir [dir]
-  (let [fs (js/require "fs")
+  (let [
        files (.readdirSync fs dir)
         string-files (map (fn [item] item) files)
         conditions [
                  (fn  [s]   (not (== s "README.md")))
                  (fn  [s]   (not (util/is-system-file? s)))
-                  ]
+                 ]
+        res (filter-condition-collection-into-collection string-files conditions)
         ]
-    (filter-condition-collection-into-collection string-files conditions)
+    (add-folder-char dir res)
+
    ))
 
 
 
 
-(comment  let [http (js/require "http")
-               handler (fn [req res] (.end res "Hello sailor!"))
-               server (.createServer http handler)]
-          (comment .close server (fn []))
-          (comment .stop server (fn []))
-          (comment .listen server 1337))
+
+
 
 (comment
   (require '[cljs.repl.node :as node])(node/run-node-nrepl)

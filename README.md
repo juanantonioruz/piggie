@@ -8,6 +8,9 @@ Working with node-repl  https://github.com/bodil/cljs-noderepl  and piggieback h
 It must be running the ncljsc server on port 4242   
 '''supervisor -w src/foo.cljs -n exit -x ncljsc -- --client 4242 -c -p src/foo.cljs > compiled.js'''
 
+##Jasmine node working ok
+'''jasmine-node jasmine_node_tests --autotest --verbose'''
+
 
 Working cljscript environment to develop nodejs libs
 
