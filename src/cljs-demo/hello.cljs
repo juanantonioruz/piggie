@@ -1,8 +1,10 @@
 (ns cljs-demo.hello
 ; this is the package! cljs-demo.hello in js cljs_demo.hello
 ; this macro not work with nsclj build  (:require-macros [cemerick.cljs.test :as uu])
-;  (:require [cemerick.cljs.test :as t])
+                                        ;  (:require [cemerick.cljs.test :as t])
+  (:require [cljs-demo.util :as mi_util])
   )
+
 
 
                                         ; we are going to define a

@@ -11,6 +11,7 @@
          (ns juan 
            (:require [clojure.string :as stt
                       ])))
+(def hola "hola")
 
 (defn filter-condition-collection-into-collection [string-files fn_filters]
 

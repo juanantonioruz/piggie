@@ -25,5 +25,5 @@
 (starts-with? ".ey" "+")
 
 (is-system-file? ".ey")
-(println "ey")
+;(println "ey")
 (-str/replace ".ey" "." "")

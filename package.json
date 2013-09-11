@@ -4,6 +4,7 @@
   , "private": true
   , "dependencies": {
     "request": "*",
+    "mori":"*",
 		"jasmine-node":"1.4.0"
   }
   ,"engines": {

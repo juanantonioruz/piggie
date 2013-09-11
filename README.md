@@ -4,6 +4,11 @@ A cljs-node app.
 Working with node-repl  https://github.com/bodil/cljs-noderepl  and piggieback https://github.com/cemerick/piggieback
 
 
+! new command line to compile to a specific file   
+It must be running the ncljsc server on port 4242   
+'''supervisor -w src/foo.cljs -n exit -x ncljsc -- --client 4242 -c -p src/foo.cljs > compiled.js'''
+
+
 Working cljscript environment to develop nodejs libs
 
 ###Required:   
@@ -19,7 +24,7 @@ $ npm install -g nodemon
 $ ncljsc --server 4242   
 $ git clone git@github.com:juanantonioruz/piggie.git   
 $ cd ../piggie  
-$ supervisor -w src/cljs-demo/hello.cljs -n exit -x nclj -- --client 4242 --compile  src/cljs-demo/hello.cljs  
+$ supervisor -w src/cljs-demo/hello.cljs -n exit -x ncljsc -- --client 4242 --compile src/cljs-demo/hello.cljs
 SWITCH  
 $ nodemon jasmine-test.js  
 OR
