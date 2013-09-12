@@ -8,7 +8,7 @@ var ideate_util=compiled.ideate.util;
 describe("A suite to test a cljs compilation to use as a node dep", function() {
     it("listing dir resources", function() {
         var r=compiled.foo.clj_to_js(ideate.list_dir("./"));
-        console.log(r);
+
         expect(r).toContain("doc/");
 
     });
@@ -283,8 +283,8 @@ describe ("ideateAPI FS and XML --   test suite", function(){
                         var data=my_app.loadXML(test_file_1);
                         
                         expect(my_app.loadXML(test_file_1)).not.toBe(null);
-                        console.log("ssssss"+my_xml_dom);
-                        console.log(my_app.getValue(xml.parse_xml(doc), "//title/text()"));
+                       // console.log("ssssss"+my_xml_dom);
+                       // console.log(my_app.getValue(xml.parse_xml(doc), "//title/text()"));
                         expect(my_app.getValue(xml.parse_xml(doc), "//title/text()"))
                             .toEqual(my_app.getValue(data, "//title/text()"));
                         expect(xml.serialize_dom(data)).toEqual(xml.serialize_dom(my_xml_dom));
@@ -426,7 +426,7 @@ describe ("ideateAPI FS and XML --   test suite", function(){
                 .toEqual(book_title);
         });
         it("** getValue(xmlDoc, xpath): behavior xpath return element", function(){
-console.log(my_xml);
+
             expect(my_app.getValue(my_xml,
                                    "//title"))
                 .toEqual(book_title);

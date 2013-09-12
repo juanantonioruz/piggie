@@ -2,6 +2,8 @@
 /target
 /lib
 /classes
+/tests/sampleResources
+/sampleResources
 /checkouts
 pom.xml
 .repl/

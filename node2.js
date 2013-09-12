@@ -21524,6 +21524,14 @@ goog.exportSymbol("ideate.xml.serialize_dom", ideate.xml.serialize_dom);
 ideate.xml.select_first_xpath_result = function select_first_xpath_result(xml_doc, xpath_pattern) {
   return ideate.xml.xpath.select1(xpath_pattern, xml_doc)
 };
+ideate.xml.extract = function extract(xml_doc, xpath_pattern) {
+  return ideate.xml.xpath.select(xpath_pattern, xml_doc)
+};
+goog.exportSymbol("ideate.xml.extract", ideate.xml.extract);
+ideate.xml.extract1 = function extract1(xml_doc, xpath_pattern) {
+  return ideate.xml.select_first_xpath_result.call(null, xml_doc, xpath_pattern)
+};
+goog.exportSymbol("ideate.xml.extract1", ideate.xml.extract1);
 goog.provide("goog.disposable.IDisposable");
 goog.disposable.IDisposable = function() {
 };
@@ -26142,14 +26150,14 @@ ideate.ideate.saveXML = function saveXML(uri, xmlDoc) {
   return ideate.fs.fs.writeFileSync(uri, xmlDoc)
 };
 goog.exportSymbol("ideate.ideate.saveXML", ideate.ideate.saveXML);
-ideate.ideate.node_types = cljs.core.ObjMap.fromObject(["\ufdd0:1", "\ufdd0:2", "\ufdd0:3"], {"\ufdd0:1":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
-  var temp__3971__auto___3034 = node.firstChild;
-  if(cljs.core.truth_(temp__3971__auto___3034)) {
-    var first_child_3035 = temp__3971__auto___3034;
-    [cljs.core.str("jooooo"), cljs.core.str(first_child_3035.data)].join("")
+ideate.ideate.node_types = cljs.core.ObjMap.fromObject(["\ufdd0:1", "\ufdd0:2", "\ufdd0:3"], {"\ufdd0:1":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set", "\ufdd0:remove"], {"\ufdd0:get":function node_types(node) {
+  var temp__3971__auto__ = node.firstChild;
+  if(cljs.core.truth_(temp__3971__auto__)) {
+    var first_child = temp__3971__auto__;
+    return[cljs.core.str(first_child.data)].join("")
   }else {
+    return""
   }
-  return node.value
 }, "\ufdd0:set":function node_types(node, new_value) {
   var temp__3971__auto__ = node.firstChild;
   if(cljs.core.truth_(temp__3971__auto__)) {
@@ -26159,21 +26167,26 @@ ideate.ideate.node_types = cljs.core.ObjMap.fromObject(["\ufdd0:1", "\ufdd0:2", 
     var child = node.ownerDocument.createTextNode(new_value);
     return node.firstChild = child
   }
-}}), "\ufdd0:2":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
-  return[cljs.core.str("eeee"), cljs.core.str(node.value)].join("")
+}, "\ufdd0:remove":function node_types(node) {
+  return node.parentNode.removeChild(node)
+}}), "\ufdd0:2":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set", "\ufdd0:remove"], {"\ufdd0:get":function node_types(node) {
+  return[cljs.core.str(node.value)].join("")
 }, "\ufdd0:set":function node_types(node, new_value) {
   return node.value = new_value
-}}), "\ufdd0:3":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
+}, "\ufdd0:remove":function node_types(node) {
+  return node.ownerElement.removeAttribute(node.nodeName)
+}}), "\ufdd0:3":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set", "\ufdd0:remove"], {"\ufdd0:get":function node_types(node) {
   return node.toString()
 }, "\ufdd0:set":function node_types(node, new_value) {
   return node.value = new_value
+}, "\ufdd0:remove":function node_types(node) {
+  return node.value = ""
 }})});
-ideate.ideate.getValue = function getValue(xmlDoc, xpath_pattern) {
-  var temp__3971__auto__ = ideate.xml.select_first_xpath_result.call(null, xmlDoc, xpath_pattern);
+ideate.ideate.getValue = function getValue(xml_doc, xpath_pattern) {
+  var temp__3971__auto__ = ideate.xml.select_first_xpath_result.call(null, xml_doc, xpath_pattern);
   if(cljs.core.truth_(temp__3971__auto__)) {
     var result = temp__3971__auto__;
     var node_type = cljs.core.keyword.call(null, result.nodeType);
-    console.log([cljs.core.str("---\>ESTTTTTTOOO "), cljs.core.str(result.nodeType)].join(""));
     return(new cljs.core.Keyword("\ufdd0:get")).call(null, node_type.call(null, ideate.ideate.node_types)).call(null, result)
   }else {
     return ideate.util.throw_js_error.call(null, "there's no value for this xpath: ", xpath_pattern)
@@ -26191,6 +26204,63 @@ ideate.ideate.setValue = function setValue(xmlDoc, xpath_pattern, new_value) {
   }
 };
 goog.exportSymbol("ideate.ideate.setValue", ideate.ideate.setValue);
+ideate.ideate.removeXML = function removeXML(xmlDoc, xpath_pattern) {
+  var temp__3971__auto__ = ideate.xml.select_first_xpath_result.call(null, xmlDoc, xpath_pattern);
+  if(cljs.core.truth_(temp__3971__auto__)) {
+    var result = temp__3971__auto__;
+    var node_type = cljs.core.keyword.call(null, result.nodeType);
+    return(new cljs.core.Keyword("\ufdd0:remove")).call(null, node_type.call(null, ideate.ideate.node_types)).call(null, result)
+  }else {
+    return ideate.util.throw_js_error.call(null, "there's no value for this xpath: ", xpath_pattern)
+  }
+};
+goog.exportSymbol("ideate.ideate.removeXML", ideate.ideate.removeXML);
+ideate.ideate.append = function append(xml_doc, new_content) {
+  return xml_doc.appendChild(new_content)
+};
+goog.exportSymbol("ideate.ideate.append", ideate.ideate.append);
+goog.provide("ideate.resource");
+goog.require("cljs.core");
+goog.require("ideate.ideate");
+ideate.resource.compareCopyItem = function compareCopyItem(copyItem, source_dir, target_dir) {
+  return null
+};
+goog.exportSymbol("ideate.resource.compareCopyItem", ideate.resource.compareCopyItem);
+ideate.resource.walk_attributes = function walk_attributes(node) {
+  return""
+};
+goog.exportSymbol("ideate.resource.walk_attributes", ideate.resource.walk_attributes);
+ideate.resource.compare_attributes = function compare_attributes(the_list, node) {
+  return""
+};
+goog.exportSymbol("ideate.resource.compare_attributes", ideate.resource.compare_attributes);
+ideate.resource.walk_node = function walk_node(the_list, node) {
+  return""
+};
+goog.exportSymbol("ideate.resource.walk_node", ideate.resource.walk_node);
+ideate.resource.begin_walk = function begin_walk(the_list, node) {
+  return""
+};
+goog.exportSymbol("ideate.resource.begin_walk", ideate.resource.begin_walk);
+ideate.resource.clone = function clone(uri, uri_target) {
+  var the_uri = uri;
+  while(true) {
+    var files = ideate.ideate.list_dir.call(null, the_uri);
+    return cljs.core.map.call(null, function(files) {
+      return function(item) {
+        while(true) {
+          cljs.core.println.call(null, item);
+          var G__3034 = item;
+          item = G__3034;
+          continue;
+          break
+        }
+      }
+    }(files), files);
+    break
+  }
+};
+goog.exportSymbol("ideate.resource.clone", ideate.resource.clone);
 goog.provide("cljs.nodejs");
 goog.require("cljs.core");
 cljs.nodejs.require = require;
@@ -26206,10 +26276,12 @@ goog.exportSymbol("ey.bar.title", ey.bar.title);
 goog.provide("foo");
 goog.require("cljs.core");
 goog.require("ideate.util");
+goog.require("ideate.resource");
 goog.require("ideate.ideate");
 goog.require("ey.bar");
 goog.require("cljs.nodejs");
 foo.greet = function greet(name, title) {
+  cljs.core.print.call(null, ideate.resource.clone);
   console.log(ideate.ideate.list_dir.call(null, "./"));
   return[cljs.core.str("Hola, "), cljs.core.str(ey.bar.title.call(null, title)), cljs.core.str(" "), cljs.core.str(name)].join("")
 };

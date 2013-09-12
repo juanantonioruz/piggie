@@ -23,7 +23,7 @@
 
 (defn ^:export createFolder [uri]
   "create folder"
-  (println (str "creating folder " uri))
+  ;(println (str "creating folder " uri))
      (.mkdirSync fs/fs uri)
   )
 

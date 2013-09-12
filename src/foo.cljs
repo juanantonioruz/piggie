@@ -3,6 +3,7 @@
   (:require [cljs.nodejs :as nodejs]
             [ey.bar :as bar]
             [ideate.ideate :as ideate]
+            [ideate.resource :as resource]
                [ideate.util :as util]
 
 
@@ -10,8 +11,9 @@
    
             ))
 
-(defn ^:export greet [name, title]
 
+(defn ^:export greet [name, title]
+  (print resource/clone)
   (. js/console log (ideate/list_dir "./"))
   (str "Hola, " (bar/title title) " " name  ))
 
