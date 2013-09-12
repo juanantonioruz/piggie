@@ -10,21 +10,31 @@
   
   )
 
-(defn ^:export copy-file [uri dest-uri]
+
+
+(defn ^:export copy [uri dest-uri]
   "copy a file, the dest-uri must contain the absolute name of the new file "
   (let [the-content (.readFileSync fs/fs uri)]
     (.writeFileSync fs/fs dest-uri the-content)
     )
   )
 
-(defn ^:export create-file [uri]
+(defn ^:export createFolder [uri]
+  "create folder"
+  (println (str "creating folder " uri))
+     (.mkdirSync fs/fs uri)
+  )
+
+(defn ^:export createFile [uri]
   "create file"
   (let [the-dir (fs/extract-dir-from-uri-file uri)]
     (if (fs/is-dir? the-dir)
-     (.writeFileSync fs/fs uri)
-     (str "ERROR: The directory for this url " the-dir " doesnt exist! You have to create it before")
+      (.writeFileSync fs/fs uri)
+      (throw (js/Error. (str "Houston, we have a problem.\n" (str "ERROR: The directory for this url " the-dir " doesnt exist! You have to create it before"))))
+     
      ))
   )
+
 (defn ^:export list-dir
   "the path must end in hash"
   ([] (list-dir "./"))
