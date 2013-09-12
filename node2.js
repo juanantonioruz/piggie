@@ -21423,6 +21423,57 @@ clojure.string.escape = function escape(s, cmap) {
 goog.provide("ideate.util");
 goog.require("cljs.core");
 goog.require("clojure.string");
+ideate.util.throw_js_error = function() {
+  var throw_js_error__delegate = function(message) {
+    throw new Error(cljs.core.apply.call(null, cljs.core.str, [cljs.core.str("\nAN ERROR OCCURRED!\n"), cljs.core.str(clojure.string.join.call(null, "\n", message))].join("")));
+  };
+  var throw_js_error = function(var_args) {
+    var message = null;
+    if(goog.isDef(var_args)) {
+      message = cljs.core.array_seq(Array.prototype.slice.call(arguments, 0), 0)
+    }
+    return throw_js_error__delegate.call(this, message)
+  };
+  throw_js_error.cljs$lang$maxFixedArity = 0;
+  throw_js_error.cljs$lang$applyTo = function(arglist__3036) {
+    var message = cljs.core.seq(arglist__3036);
+    return throw_js_error__delegate(message)
+  };
+  throw_js_error.cljs$lang$arity$variadic = throw_js_error__delegate;
+  return throw_js_error
+}();
+ideate.util.clj_to_js = function clj_to_js(x) {
+  return cljs.core.clj__GT_js.call(null, x)
+};
+goog.exportSymbol("ideate.util.clj_to_js", ideate.util.clj_to_js);
+ideate.util.clj__GT_js = function clj__GT_js(x) {
+  if(cljs.core.string_QMARK_.call(null, x)) {
+    return x
+  }else {
+    if(cljs.core.keyword_QMARK_.call(null, x)) {
+      return cljs.core.name.call(null, x)
+    }else {
+      if(cljs.core.map_QMARK_.call(null, x)) {
+        return cljs.core.reduce.call(null, function(m, p__3039) {
+          var vec__3040 = p__3039;
+          var k = cljs.core.nth.call(null, vec__3040, 0, null);
+          var v = cljs.core.nth.call(null, vec__3040, 1, null);
+          return cljs.core.assoc.call(null, m, clj__GT_js.call(null, k), clj__GT_js.call(null, v))
+        }, cljs.core.ObjMap.EMPTY, x).strobj()
+      }else {
+        if(cljs.core.coll_QMARK_.call(null, x)) {
+          return cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, x))
+        }else {
+          if("\ufdd0:else") {
+            return x
+          }else {
+            return null
+          }
+        }
+      }
+    }
+  }
+};
 ideate.util.contains_QMARK_ = function contains_QMARK_(s, match) {
   var subtituttion = clojure.string.replace.call(null, s, match, "");
   return!(s === ideate.util.substitution)
@@ -21442,21 +21493,17 @@ ideate.util.apply_filters_to_collection = function apply_filters_to_collection(f
     if(the_next == null) {
       return cljs.core.filter.call(null, the_first, the_files)
     }else {
-      var G__3038 = cljs.core.first.call(null, the_next);
-      var G__3039 = cljs.core.next.call(null, the_next);
-      var G__3040 = cljs.core.filter.call(null, the_first, the_files);
-      the_first = G__3038;
-      the_next = G__3039;
-      the_files = G__3040;
+      var G__3041 = cljs.core.first.call(null, the_next);
+      var G__3042 = cljs.core.next.call(null, the_next);
+      var G__3043 = cljs.core.filter.call(null, the_first, the_files);
+      the_first = G__3041;
+      the_next = G__3042;
+      the_files = G__3043;
       continue
     }
     break
   }
 };
-ideate.util.contains_QMARK_.call(null, ".ey", ".");
-ideate.util.starts_with_QMARK_.call(null, ".ey", "+");
-ideate.util.is_system_file_QMARK_.call(null, ".ey");
-clojure.string.replace.call(null, ".ey", ".", "");
 goog.provide("ideate.xml");
 goog.require("cljs.core");
 goog.require("ideate.util");
@@ -21465,7 +21512,17 @@ ideate.xml.xpath = require("xpath");
 ideate.xml.dom_parser = ideate.xml.xmldom.DOMParser;
 ideate.xml.xml_serializer = ideate.xml.xmldom.XMLSerializer;
 ideate.xml.parse_xml = function parse_xml(xml_string) {
-  return new ideate.xml.dom_parser(xml_string, "text/xml")
+  var dom_parser_instance = new ideate.xml.dom_parser;
+  return dom_parser_instance.parseFromString([cljs.core.str(xml_string)].join(""), "text/xml")
+};
+goog.exportSymbol("ideate.xml.parse_xml", ideate.xml.parse_xml);
+ideate.xml.serialize_dom = function serialize_dom(the_dom) {
+  var xml_serializer_instance = new ideate.xml.xml_serializer;
+  return xml_serializer_instance.serializeToString(the_dom)
+};
+goog.exportSymbol("ideate.xml.serialize_dom", ideate.xml.serialize_dom);
+ideate.xml.select_first_xpath_result = function select_first_xpath_result(xml_doc, xpath_pattern) {
+  return ideate.xml.xpath.select1(xpath_pattern, xml_doc)
 };
 goog.provide("goog.disposable.IDisposable");
 goog.disposable.IDisposable = function() {
@@ -25900,6 +25957,7 @@ goog.async.Delay.prototype.doAction_ = function() {
 };
 goog.provide("ideate.fs");
 goog.require("cljs.core");
+goog.require("clojure.string");
 goog.require("ideate.util");
 ideate.fs.fs = require("fs");
 ideate.fs.is_dir_QMARK_ = function is_dir_QMARK_(the_dir) {
@@ -25921,6 +25979,10 @@ ideate.fs.check_correct_dir_format = function check_correct_dir_format(dir) {
   }else {
     return[cljs.core.str(dir), cljs.core.str("/")].join("")
   }
+};
+ideate.fs.extract_dir_from_uri_file = function extract_dir_from_uri_file(uri) {
+  var split_uri = clojure.string.split.call(null, uri, "/");
+  return clojure.string.join.call(null, "/", cljs.core.reverse.call(null, cljs.core.next.call(null, cljs.core.reverse.call(null, split_uri))))
 };
 goog.provide("ideate.fs.dir");
 goog.require("cljs.core");
@@ -25946,6 +26008,29 @@ goog.require("ideate.fs.dir");
 goog.require("ideate.xml");
 goog.require("ideate.fs");
 goog.require("ideate.util");
+ideate.ideate.copy = function copy(uri, dest_uri) {
+  var the_content = ideate.fs.fs.readFileSync(uri);
+  return ideate.fs.fs.writeFileSync(dest_uri, the_content)
+};
+goog.exportSymbol("ideate.ideate.copy", ideate.ideate.copy);
+ideate.ideate.createFolder = function createFolder(uri) {
+  cljs.core.println.call(null, [cljs.core.str("creating folder "), cljs.core.str(uri)].join(""));
+  return ideate.fs.fs.mkdirSync(uri)
+};
+goog.exportSymbol("ideate.ideate.createFolder", ideate.ideate.createFolder);
+ideate.ideate.createFile = function createFile(uri) {
+  var the_dir = ideate.fs.extract_dir_from_uri_file.call(null, uri);
+  if(cljs.core.truth_(ideate.fs.is_dir_QMARK_.call(null, the_dir))) {
+    return ideate.fs.fs.writeFileSync(uri)
+  }else {
+    return ideate.util.throw_js_error.call(null, [cljs.core.str("Houston, we have a problem.\n"), cljs.core.str([cljs.core.str("ERROR: The directory for this url "), cljs.core.str(the_dir), cljs.core.str(" doesnt exist! You have to create it before")].join(""))].join(""))
+  }
+};
+goog.exportSymbol("ideate.ideate.createFile", ideate.ideate.createFile);
+ideate.ideate.exception_test = function exception_test() {
+  return ideate.util.throw_js_error.call(null, "jolin", "cojones")
+};
+goog.exportSymbol("ideate.ideate.exception_test", ideate.ideate.exception_test);
 ideate.ideate.list_dir = function() {
   var list_dir = null;
   var list_dir__0 = function() {
@@ -25961,37 +26046,37 @@ ideate.ideate.list_dir = function() {
     var the_dir = ideate.fs.check_correct_dir_format.call(null, dir);
     var files = ideate.fs.fs.readdirSync(the_dir);
     var res = function() {
-      var the_first__3009__auto__ = cljs.core.first.call(null, filters);
-      var the_next__3010__auto__ = cljs.core.next.call(null, filters);
-      var the_files__3011__auto__ = files;
+      var the_first__3013__auto__ = cljs.core.first.call(null, filters);
+      var the_next__3014__auto__ = cljs.core.next.call(null, filters);
+      var the_files__3015__auto__ = files;
       while(true) {
-        if(the_next__3010__auto__ == null) {
-          return cljs.core.filter.call(null, the_first__3009__auto__, the_files__3011__auto__)
+        if(the_next__3014__auto__ == null) {
+          return cljs.core.filter.call(null, the_first__3013__auto__, the_files__3015__auto__)
         }else {
-          var G__3023 = cljs.core.first.call(null, the_next__3010__auto__);
-          var G__3024 = cljs.core.next.call(null, the_next__3010__auto__);
-          var G__3025 = cljs.core.filter.call(null, the_first__3009__auto__, the_files__3011__auto__);
-          the_first__3009__auto__ = G__3023;
-          the_next__3010__auto__ = G__3024;
-          the_files__3011__auto__ = G__3025;
+          var G__3023 = cljs.core.first.call(null, the_next__3014__auto__);
+          var G__3024 = cljs.core.next.call(null, the_next__3014__auto__);
+          var G__3025 = cljs.core.filter.call(null, the_first__3013__auto__, the_files__3015__auto__);
+          the_first__3013__auto__ = G__3023;
+          the_next__3014__auto__ = G__3024;
+          the_files__3015__auto__ = G__3025;
           continue
         }
         break
       }
     }();
-    var the_first__3009__auto__ = cljs.core.first.call(null, transformations);
-    var the_next__3010__auto__ = cljs.core.next.call(null, transformations);
-    var the_files__3011__auto__ = res;
+    var the_first__3013__auto__ = cljs.core.first.call(null, transformations);
+    var the_next__3014__auto__ = cljs.core.next.call(null, transformations);
+    var the_files__3015__auto__ = res;
     while(true) {
-      if(the_next__3010__auto__ == null) {
-        return cljs.core.map.call(null, the_first__3009__auto__, the_files__3011__auto__)
+      if(the_next__3014__auto__ == null) {
+        return cljs.core.map.call(null, the_first__3013__auto__, the_files__3015__auto__)
       }else {
-        var G__3026 = cljs.core.first.call(null, the_next__3010__auto__);
-        var G__3027 = cljs.core.next.call(null, the_next__3010__auto__);
-        var G__3028 = cljs.core.map.call(null, the_first__3009__auto__, the_files__3011__auto__);
-        the_first__3009__auto__ = G__3026;
-        the_next__3010__auto__ = G__3027;
-        the_files__3011__auto__ = G__3028;
+        var G__3026 = cljs.core.first.call(null, the_next__3014__auto__);
+        var G__3027 = cljs.core.next.call(null, the_next__3014__auto__);
+        var G__3028 = cljs.core.map.call(null, the_first__3013__auto__, the_files__3015__auto__);
+        the_first__3013__auto__ = G__3026;
+        the_next__3014__auto__ = G__3027;
+        the_files__3015__auto__ = G__3028;
         continue
       }
       break
@@ -26046,10 +26131,66 @@ ideate.ideate.remove = function remove(uri) {
   }
 };
 goog.exportSymbol("ideate.ideate.remove", ideate.ideate.remove);
+ideate.ideate._loadFile = function _loadFile(uri) {
+  return ideate.fs.fs.readFileSync(uri)
+};
 ideate.ideate.loadXML = function loadXML(uri) {
-  return ideate.xml.parse_xml.call(null, ideate.fs.fs.readFileSync(uri))
+  return ideate.xml.parse_xml.call(null, [cljs.core.str(ideate.ideate._loadFile.call(null, uri))].join(""))
 };
 goog.exportSymbol("ideate.ideate.loadXML", ideate.ideate.loadXML);
+ideate.ideate.saveXML = function saveXML(uri, xmlDoc) {
+  return ideate.fs.fs.writeFileSync(uri, xmlDoc)
+};
+goog.exportSymbol("ideate.ideate.saveXML", ideate.ideate.saveXML);
+ideate.ideate.node_types = cljs.core.ObjMap.fromObject(["\ufdd0:1", "\ufdd0:2", "\ufdd0:3"], {"\ufdd0:1":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
+  var temp__3971__auto___3034 = node.firstChild;
+  if(cljs.core.truth_(temp__3971__auto___3034)) {
+    var first_child_3035 = temp__3971__auto___3034;
+    [cljs.core.str("jooooo"), cljs.core.str(first_child_3035.data)].join("")
+  }else {
+  }
+  return node.value
+}, "\ufdd0:set":function node_types(node, new_value) {
+  var temp__3971__auto__ = node.firstChild;
+  if(cljs.core.truth_(temp__3971__auto__)) {
+    var first_child = temp__3971__auto__;
+    return first_child.data = new_value
+  }else {
+    var child = node.ownerDocument.createTextNode(new_value);
+    return node.firstChild = child
+  }
+}}), "\ufdd0:2":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
+  return[cljs.core.str("eeee"), cljs.core.str(node.value)].join("")
+}, "\ufdd0:set":function node_types(node, new_value) {
+  return node.value = new_value
+}}), "\ufdd0:3":cljs.core.ObjMap.fromObject(["\ufdd0:get", "\ufdd0:set"], {"\ufdd0:get":function node_types(node) {
+  return node.toString()
+}, "\ufdd0:set":function node_types(node, new_value) {
+  return node.value = new_value
+}})});
+ideate.ideate.getValue = function getValue(xmlDoc, xpath_pattern) {
+  var temp__3971__auto__ = ideate.xml.select_first_xpath_result.call(null, xmlDoc, xpath_pattern);
+  if(cljs.core.truth_(temp__3971__auto__)) {
+    var result = temp__3971__auto__;
+    var node_type = cljs.core.keyword.call(null, result.nodeType);
+    console.log([cljs.core.str("---\>ESTTTTTTOOO "), cljs.core.str(result.nodeType)].join(""));
+    return(new cljs.core.Keyword("\ufdd0:get")).call(null, node_type.call(null, ideate.ideate.node_types)).call(null, result)
+  }else {
+    return ideate.util.throw_js_error.call(null, "there's no value for this xpath: ", xpath_pattern)
+  }
+};
+goog.exportSymbol("ideate.ideate.getValue", ideate.ideate.getValue);
+ideate.ideate.setValue = function setValue(xmlDoc, xpath_pattern, new_value) {
+  var temp__3971__auto__ = ideate.xml.select_first_xpath_result.call(null, xmlDoc, xpath_pattern);
+  if(cljs.core.truth_(temp__3971__auto__)) {
+    var result = temp__3971__auto__;
+    var node_type = cljs.core.keyword.call(null, result.nodeType);
+    return(new cljs.core.Keyword("\ufdd0:set")).call(null, node_type.call(null, ideate.ideate.node_types)).call(null, result, new_value)
+  }else {
+    return ideate.util.throw_js_error.call(null, "there's no value for this xpath: ", xpath_pattern)
+  }
+};
+goog.exportSymbol("ideate.ideate.setValue", ideate.ideate.setValue);
 goog.provide("cljs.nodejs");
 goog.require("cljs.core");
 cljs.nodejs.require = require;
@@ -26074,32 +26215,7 @@ foo.greet = function greet(name, title) {
 };
 goog.exportSymbol("foo.greet", foo.greet);
 foo.clj__GT_js = function clj__GT_js(x) {
-  if(cljs.core.string_QMARK_.call(null, x)) {
-    return x
-  }else {
-    if(cljs.core.keyword_QMARK_.call(null, x)) {
-      return cljs.core.name.call(null, x)
-    }else {
-      if(cljs.core.map_QMARK_.call(null, x)) {
-        return cljs.core.reduce.call(null, function(m, p__3021) {
-          var vec__3022 = p__3021;
-          var k = cljs.core.nth.call(null, vec__3022, 0, null);
-          var v = cljs.core.nth.call(null, vec__3022, 1, null);
-          return cljs.core.assoc.call(null, m, clj__GT_js.call(null, k), clj__GT_js.call(null, v))
-        }, cljs.core.ObjMap.EMPTY, x).strobj()
-      }else {
-        if(cljs.core.coll_QMARK_.call(null, x)) {
-          return cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, x))
-        }else {
-          if("\ufdd0:else") {
-            return x
-          }else {
-            return null
-          }
-        }
-      }
-    }
-  }
+  return ideate.util.clj__GT_js.call(null, x)
 };
 foo.bridge = function bridge(dirname) {
   return foo.clj__GT_js.call(null, ideate.ideate.list_dir.call(null, "./"))

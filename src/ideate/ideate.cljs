@@ -12,12 +12,14 @@
 
 
 
+
 (defn ^:export copy [uri dest-uri]
   "copy a file, the dest-uri must contain the absolute name of the new file "
   (let [the-content (.readFileSync fs/fs uri)]
     (.writeFileSync fs/fs dest-uri the-content)
     )
   )
+
 
 (defn ^:export createFolder [uri]
   "create folder"
@@ -30,9 +32,12 @@
   (let [the-dir (fs/extract-dir-from-uri-file uri)]
     (if (fs/is-dir? the-dir)
       (.writeFileSync fs/fs uri)
-      (throw (js/Error. (str "Houston, we have a problem.\n" (str "ERROR: The directory for this url " the-dir " doesnt exist! You have to create it before"))))
-     
+      (util/throw-js-error (str "Houston, we have a problem.\n" (str "ERROR: The directory for this url " the-dir " doesnt exist! You have to create it before")))
      ))
+  )
+
+(defn ^:export exception_test []
+  (util/throw-js-error "jolin" "cojones")
   )
 
 (defn ^:export list-dir
@@ -52,8 +57,10 @@
             res (mymacro/recursive-apply  filter filters files)
             ]
         (mymacro/recursive-apply  map  transformations  res)
+
         ))
   )
+
 
 (defn ^:export move
   [uri, dest-uri]
@@ -94,6 +101,74 @@
   (.writeFileSync fs/fs uri xmlDoc)
   )
 
+(def node-types {
+                 :1 {
+                     :get (fn [node]
+                        (if-let [first-child (.-firstChild node)]
+                          (str (.-data first-child))
+                          ""
+                          )
+                        )
+                     :set (fn [node new-value]
+                            (if-let [first-child (.-firstChild node)]
+                              (set! (.-data first-child) new-value )
+                              (let [child (.createTextNode (.-ownerDocument node) new-value)]
+                                (set! (.-firstChild node)  child)
+                                )
+                              )    
+                            )
+                     :remove (fn [node]
+                               (.removeChild (.-parentNode node) node)
+                               )
+                     
+                     }
+                 :2 {:get (fn [node] (str (.-value node)))
+                     :set (fn [node new-value] (set! (.-value node) new-value ))
+                     :remove (fn [node]
+                               (.removeAttribute (.-ownerElement node) (.-nodeName node))
+                               )
+                     }
+                 :3 {
+                     :get (fn [node] (.toString node))
+                     :set (fn [node new-value] (set! (.-value node) new-value ))
+                     :remove (fn [node]
+                               (set! (.-value node) "" ))
+                     }
+                 
+                 })
+
+(defn ^:export getValue [xml-doc xpath-pattern]
+  (if-let [result (xml/select-first-xpath-result xml-doc xpath-pattern)]
+    (let [node-type (keyword (.-nodeType result))]
+;      (.log js/console (str "--->ESTTTTTTOOO "(.-nodeType result)))
+      ((:get (node-type node-types)) result)
+      )
+    (util/throw-js-error "there's no value for this xpath: " xpath-pattern)
+      )
+  )
+
+
+(defn ^:export setValue [xmlDoc xpath-pattern  new-value]
+  (if-let [result (xml/select-first-xpath-result xmlDoc xpath-pattern)]
+        (let [node-type (keyword (.-nodeType result))]
+      ((:set (node-type node-types)) result new-value)
+      )
+    (util/throw-js-error "there's no value for this xpath: " xpath-pattern)
+      )
+  )
+
+(defn ^:export removeXML [xmlDoc xpath-pattern]
+    (if-let [result (xml/select-first-xpath-result xmlDoc xpath-pattern)]
+        (let [node-type (keyword (.-nodeType result))]
+      ((:remove (node-type node-types)) result )
+      )
+    (util/throw-js-error "there's no value for this xpath: " xpath-pattern)
+    )
+  )
+
+(defn ^:export append [xml-doc new-content]
+  (.appendChild xml-doc new-content)
+  )
 
 (comment
   (require '[cljs.repl.node :as node])(node/run-node-nrepl)
