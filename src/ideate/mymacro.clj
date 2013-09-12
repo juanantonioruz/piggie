@@ -1,4 +1,4 @@
-(ns ideate.my-macro)
+(ns ideate.mymacro)
 
 (defmacro unless
   [pred & body]

@@ -30,10 +30,12 @@
   )
 
 
-(contains? ".ey" ".")
 
-(starts-with? ".ey" "+")
+;(contains? ".ey" ".")
 
-(is-system-file? ".ey")
+;(starts-with? ".ey" "+")
+
+;(is-system-file? ".ey")
 ;(println "ey")
-(-str/replace ".ey" "." "")
+;(-str/replace ".ey" "." "")
+

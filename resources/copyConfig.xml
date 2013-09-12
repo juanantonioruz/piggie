@@ -1,0 +1,11 @@
+<comp1>
+    <name>Test 1</name>
+    <color></color>
+    <person id="">
+        <name>
+            <first>Joe</first>
+            <last></last>
+        </name>
+        <age>23</age>
+    </person>
+</comp1>

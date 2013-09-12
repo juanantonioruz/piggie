@@ -5,7 +5,10 @@
   , "dependencies": {
     "request": "*",
     "mori":"*",
-		"jasmine-node":"1.4.0"
+		"jasmine-node":"1.4.0",
+    "xpath": "",
+    "xmldom": "",
+      "node-logging":""
   }
   ,"engines": {
     "node": "0.8.4",
