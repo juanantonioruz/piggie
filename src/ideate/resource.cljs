@@ -1,6 +1,13 @@
 (ns ideate.resource
-  (:require [ideate.fs :as fs][ideate.ideate :as ideate])
-  )
+  (:require
+ [ideate.ideate :as ideate]
+ [clojure.zip :as zz]
+ [clojure.walk :as ww]
+   ))
+
+
+
+ww/walk
 
 
 (defn ^:export compareCopyItem [copyItem source-dir target-dir]

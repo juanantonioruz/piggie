@@ -8,6 +8,7 @@
                  [com.cemerick/piggieback "0.1.0"]
                  [com.cemerick/clojurescript.test "0.0.5-SNAPSHOT"]
                  [org.clojure/clojurescript "0.0-1586"]
+                 [org.clojure/data.zip "0.1.1"]
                  ]
   :hooks [leiningen.cljsbuild]
   :plugins [[lein-cljsbuild "0.3.0"][org.bodil/lein-noderepl "0.1.10"]]
