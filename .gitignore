@@ -3,6 +3,7 @@
 /lib
 /classes
 /tests/sampleResources
+/tests
 /sampleResources
 /checkouts
 pom.xml
