@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><comp1>
+    <name>Test 1</name>
+    <color>blue</color>
+    <person id="test1">
+        <name>
+            <first>Joe</first>
+            <last>Smith</last>
+        </name>
+        <age>23</age>
+    </person>
+</comp1>

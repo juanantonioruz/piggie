@@ -3,11 +3,12 @@ var compiled=require("./../compiled.js");
 console.log("Exploring the cljs map file ...");
 console.log(compiled);
 var ideate =compiled.ideate.ideate;
-var compareResource =compiled.ideate.resource;
+var compareResource =compiled.ideate.compare;
 var resource =compiled.ideate.resource;
 var xml=compiled.ideate.xml;
 var ideate_util=compiled.ideate.util;
 //        var r=compiled.foo.clj_to_js(ideate.list_dir("./"));
+
 
 
 var files_dir="./tests/clone";
@@ -21,19 +22,24 @@ newResourceInstanceUri=target_dir+"_bis";
 
 
 describe("compareResourceCreatedFromExisting", function(){
-    
+   
 
     beforeEach(function(){
         util.try_to_remove_dir(files_dir);
+
+        console.log(""+files_dir);
         util.mkdirSync(files_dir);
         resource.clone(existingResourceInstanceUri, newResourceInstanceUri);
 
     });
+
     afterEach(function(){
-        //      util.try_to_remove_dir(files_dir);
+            // util.try_to_remove_dir(files_dir);
     });
     
-
+    it("initialization", function(){
+        expect(true).toBe(true);
+    });
 
     it("api.compareCopyFiles(copyFiles, sourceDir, targetDir)",
        function(){
@@ -101,7 +107,7 @@ describe("compareResourceCreatedFromExisting", function(){
        });
 
     
-    it("api.compareCopyItem(copyItem, sourceDir, targetDir)", function(){
+    xit("api.compareCopyItem(copyItem, sourceDir, targetDir)", function(){
 
         // still there is no change, so the comparation return null 
         expect(compareResource.compareCopyItem({uri:"comp1.xml",
@@ -127,7 +133,7 @@ describe("compareResourceCreatedFromExisting", function(){
     
 
 
-    it("api.compareCopySet(copySet, sourceDir, targetDir)", function(){
+    xit("api.compareCopySet(copySet, sourceDir, targetDir)", function(){
         
         var xml=
                 resource.loadConfig("./sampleResources/copyConfig.xml");

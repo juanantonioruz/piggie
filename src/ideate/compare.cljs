@@ -8,7 +8,7 @@
 
 
 
-(defn compareCopyItem [copy-item source-dir target-dir]
+(defn ^:export compareCopyItem [copy-item source-dir target-dir]
   (let [
         source-file (ideate/loadXML (str source-dir "/" (:uri copy-item)))
         source-value (ideate/getValue source-file (:xpath copy-item))
@@ -25,7 +25,7 @@
   )
 
 
-(compareCopyItem
+(comment compareCopyItem
  (let [
         xml-config  (ideate/loadXML "./sampleResources/copyConfig.xml")
         copy-item-xml (xml/extract1 xml-config "//copyItem")

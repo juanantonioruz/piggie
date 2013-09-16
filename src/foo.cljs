@@ -4,6 +4,7 @@
             [ey.bar :as bar]
             [ideate.ideate :as ideate]
             [ideate.resource :as resource]
+            [ideate.compare :as compare]
                [ideate.util :as util]
 
 
