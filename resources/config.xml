@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<copyConfig type="sampleResource">
+    <copyItem uri="comp1.xml" xpath="/comp1/name"/>  <!-- Copies the item from the source xml document into the template -->
+
+    <copySet uri="comp1.xml" xpath="/comp1/person">  <!-- Copies the item from the source xml document into the template -->
+        <clearItem xpath="@id"/>                        <!-- clears the indicated xpath -->
+        <clearItem xpath="name/last"/>
+    </copySet>
+    
+    <copyFiles uri="/parts" xpath="/part">         <!-- Copies all files from the indicated folder into the coresponding folder in the template -->
+        <clearItem xpath="@id"/>                 <!-- Clears the indicated xpath -->
+    </copyFiles>
+    
+</copyConfig>
+

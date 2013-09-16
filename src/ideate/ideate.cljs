@@ -10,8 +10,36 @@
   
   )
 
+(def hola "hola")
+
+(defn  tree-read [uri  acumulator]
+  "resursive read tree dir contents"
+  (let [the-uri (fs/check-correct-dir-format uri)
+        files (list-dir the-uri)]
+    (map (fn [item]
+           (let [the-new-url (str the-uri item)
+                 ]
+             
+             (if (fs/is-dir? the-new-url)
+               (do
+                 (swap! acumulator conj  the-new-url )
+                 (println " DIR " the-new-url)
+                 (tree-read the-new-url acumulator)
+                 )
+               (do
+                 (swap! acumulator conj  the-new-url)
+                 (println " FILE " the-new-url)
+             
+                 )
+               )
+             )
+           ) files)
+
+    )
+  
 
 
+  )
 
 (defn ^:export copy [uri dest-uri]
   "copy a file, the dest-uri must contain the absolute name of the new file "
@@ -19,7 +47,6 @@
     (.writeFileSync fs/fs dest-uri the-content)
     )
   )
-
 
 (defn ^:export createFolder [uri]
   "create folder"
@@ -60,7 +87,6 @@
 
         ))
   )
-
 
 (defn ^:export move
   [uri, dest-uri]
@@ -146,7 +172,6 @@
     (util/throw-js-error "there's no value for this xpath: " xpath-pattern)
       )
   )
-
 
 (defn ^:export setValue [xmlDoc xpath-pattern  new-value]
   (if-let [result (xml/select-first-xpath-result xmlDoc xpath-pattern)]

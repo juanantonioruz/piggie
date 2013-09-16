@@ -20,3 +20,7 @@
       (~the-fn-type the-first# the-files#)
       (recur (first the-next#) (next the-next#) (~the-fn-type the-first# the-files#))))
   )
+
+(comment
+  (require '[cljs.repl.node :as node])(node/run-node-nrepl)
+  )
