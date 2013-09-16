@@ -6,9 +6,24 @@
  [clojure.walk :as ww]
    ))
 
-(defn -extract-uri-xpath [node]
-  (let [give-me (fn [v]  (.getAttribute node v))]
-    {:uri (give-me "uri") :xpath (give-me "xpath")})
+(defn -extract-uri-xpath
+  ([node prefix]
+     (let [
+           give-me (fn [v]  (.getAttribute node v))
+           uri (give-me "uri")
+           xpath (let [the-xpath (give-me "xpath")]
+                   (if prefix
+                     (str prefix "/" the-xpath)
+                     the-xpath
+                     )
+                   )
+           ]
+       {:uri uri  :xpath xpath})
+     )
+  ([node]
+     (-extract-uri-xpath node nil)
+     )
+  
   )
 
 (defn -extract-copy-item [copy-item]
@@ -17,20 +32,21 @@
 
 (defn -extract-copy-set [copy-set]
   (let [
+        extract-cs (-extract-uri-xpath copy-set)
         childs (.-childNodes copy-set)
         the-length (.-length childs)
-        positions (take the-length  (iterate inc 0))
-        res  (reduce (fn [col item]
+        clear-items  (reduce (fn [col item]
               (if (= (aget childs item  "nodeName") "clearItem")
-                (conj col "jjjjjjjjjjjjclearItem")
+                (conj col (-extract-uri-xpath (aget childs item)  (:xpath extract-cs)))
                 col
                 ) 
-              ) [] positions)
+              ) [] (range the-length))
         ]
-    (print (aget childs 0   "nodeName") )
-res
+    (assoc  extract-cs :clearItems clear-items ) 
     )
   )
+
+
 
 
 (defn ^:export compareCopyItem [copyItem source-dir target-dir]
@@ -91,15 +107,10 @@ res
   (print "loading uri")
   (let [xml-doc (ideate/loadXML uri)
         ]
-    ;(println  (xml/extract xml-doc "//copyItem"))
-    (println  (xml/extract xml-doc "//copySet"))
-    ;(println  (xml/extract xml-doc "//copyFiles"))
-
-    
     {
      :copyItems (map -extract-copy-item (xml/extract xml-doc "//copyItem"))
      :copySets (map -extract-copy-set (xml/extract xml-doc "//copySet"))
-     :copyFiles ""
+     :copyFiles (map -extract-copy-set (xml/extract xml-doc "//copyFiles"))
      }
     )
   
